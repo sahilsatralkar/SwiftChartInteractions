@@ -22,7 +22,7 @@ A lightweight Swift Package that adds powerful interaction capabilities to Apple
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/yourusername/SwiftChartInteractions.git", from: "0.1.0")
+    .package(url: "https://github.com/sahilsatralkar/SwiftChartInteractions.git", from: "0.1")
 ]
 ```
 
