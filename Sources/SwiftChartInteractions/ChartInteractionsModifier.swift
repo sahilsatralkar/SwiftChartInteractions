@@ -4,9 +4,11 @@ public struct ChartInteractionsModifier: ViewModifier {
     
     let configuration: ChartInteractionsConfiguration
     @StateObject private var state = ChartInteractionState()
+    @State private var scale: CGFloat = 1.0
     
     public func body(content: Content) -> some View {
         content
+            .scaleEffect(scale)
             .gesture(
                 DragGesture()
                     .onChanged { value in
@@ -20,6 +22,19 @@ public struct ChartInteractionsModifier: ViewModifier {
                         state.dragStart = nil
                         state.dragEnd = nil
                     }
+            )
+            .gesture(
+                configuration.interactions.contains(.zoom) ?
+                MagnificationGesture()
+                    .onChanged { value in
+                        scale = value
+                    }
+                    .onEnded { value in
+                        withAnimation {
+                            scale = 1.0
+                        }
+                    }
+                : nil
             )
             .background {
                 GeometryReader { geometry in
