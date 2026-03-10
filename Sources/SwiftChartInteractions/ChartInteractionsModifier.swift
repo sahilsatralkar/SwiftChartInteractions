@@ -22,9 +22,18 @@ public struct ChartInteractionsModifier: ViewModifier {
                 }
             }
             .overlay {
-                if configuration.interactions.contains(.tapHighlight),
-                   let location = state.selectedLocation {
-                    HighlightOverlay(location: location)
+                GeometryReader { geometry in
+                    if configuration.interactions.contains(.tapHighlight),
+                       let location = state.selectedLocation {
+                        HighlightOverlay(location: location)
+                    }
+                    
+                    if configuration.interactions.contains(.tooltip),
+                       let location = state.selectedLocation {
+                        TooltipView(text: "X: \(Int(location.x)), Y: \(Int(location.y))")
+                            .position(x: min(max(location.x, 50), geometry.size.width - 50),
+                                     y: max(location.y - 40, 30))
+                    }
                 }
             }
     }
