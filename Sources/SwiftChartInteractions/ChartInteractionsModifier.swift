@@ -13,6 +13,14 @@ public struct ChartInteractionsModifier: ViewModifier {
                         state.selectedLocation = value.location
                     }
             )
+            .background {
+                GeometryReader { geometry in
+                    if configuration.interactions.contains(.crosshair),
+                       let location = state.selectedLocation {
+                        CrosshairOverlay(x: location.x, height: geometry.size.height)
+                    }
+                }
+            }
             .overlay {
                 if configuration.interactions.contains(.tapHighlight),
                    let location = state.selectedLocation {
