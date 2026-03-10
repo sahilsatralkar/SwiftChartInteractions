@@ -21,6 +21,11 @@ let package = Package(
         .target(
             name: "SwiftChartInteractions"
         ),
+        .executableTarget(
+            name: "DemoApp",
+            dependencies: ["SwiftChartInteractions"],
+            path: "Examples/DemoApp"
+        ),
         .testTarget(
             name: "SwiftChartInteractionsTests",
             dependencies: ["SwiftChartInteractions"]
