@@ -13,5 +13,11 @@ public struct ChartInteractionsModifier: ViewModifier {
                         state.selectedLocation = value.location
                     }
             )
+            .overlay {
+                if configuration.interactions.contains(.tapHighlight),
+                   let location = state.selectedLocation {
+                    HighlightOverlay(location: location)
+                }
+            }
     }
 }
