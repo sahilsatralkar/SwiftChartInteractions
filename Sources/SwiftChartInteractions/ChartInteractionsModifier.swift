@@ -11,6 +11,14 @@ public struct ChartInteractionsModifier: ViewModifier {
                 DragGesture()
                     .onChanged { value in
                         state.selectedLocation = value.location
+                        if state.dragStart == nil {
+                            state.dragStart = value.location
+                        }
+                        state.dragEnd = value.location
+                    }
+                    .onEnded { _ in
+                        state.dragStart = nil
+                        state.dragEnd = nil
                     }
             )
             .background {
@@ -33,6 +41,12 @@ public struct ChartInteractionsModifier: ViewModifier {
                         TooltipView(text: "X: \(Int(location.x)), Y: \(Int(location.y))")
                             .position(x: min(max(location.x, 50), geometry.size.width - 50),
                                      y: max(location.y - 40, 30))
+                    }
+                    
+                    if configuration.interactions.contains(.rangeSelection),
+                       let start = state.dragStart,
+                       let end = state.dragEnd {
+                        RangeSelectionOverlay(start: start, end: end)
                     }
                 }
             }
