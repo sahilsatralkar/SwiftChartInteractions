@@ -7,5 +7,11 @@ public struct ChartInteractionsModifier: ViewModifier {
     
     public func body(content: Content) -> some View {
         content
+            .gesture(
+                DragGesture()
+                    .onChanged { value in
+                        state.selectedLocation = value.location
+                    }
+            )
     }
 }
